@@ -13,15 +13,45 @@ void show_board() {
     }
 }
 
-string get_coordinate() {
+string get_coordinate_x() {
     string coordinate;
-    cout << "Input Coordinate to Fire On";
+    cout << "Input X Coordinate to Fire On: ";
     cin >> coordinate;
 
     return coordinate;
 }
 
+string get_coordinate_y() {
+    string coordinate;
+    cout << "Input Y Coordinate to Fire On: ";
+    cin >> coordinate;
+
+    return coordinate;
+}
+
+void fire() {
+    string coordinate_x = get_coordinate_x();
+    string coordinate_y = get_coordinate_y();
+
+    for (int a = 0; a < 5; a++) {
+        if (coordinate_y == board[a][0]){
+
+            for (int b = 0; b < 7; b++) {
+                if (coordinate_x == board[4][b]){
+                    board[a][b] = "X";
+                }
+            }
+        }
+       
+    }
+}
+
+
 int main() {
+
+    show_board();
+
+    fire();
 
     show_board();
 
