@@ -26,6 +26,21 @@ string get_coordinate_y() {
     cout << "Input Y Coordinate to Fire On: ";
     cin >> coordinate;
 
+    while (coordinate != "a" && coordinate != "A" && coordinate != "b" && coordinate != "B" && coordinate != "c" && coordinate != "C" && coordinate != "d" && coordinate != "D"){
+        cout << "Please select A, B, C, or D: ";
+        cin >> coordinate;
+    }
+
+    if (coordinate == "a"){
+        coordinate = "A";
+    } else if (coordinate == "b"){
+        coordinate = "B";
+    } else if (coordinate == "c"){
+        coordinate = "C";
+    } else if (coordinate == "d"){
+        coordinate = "D";
+    }
+
     return coordinate;
 }
 
