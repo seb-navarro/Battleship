@@ -1,22 +1,32 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
+
 using namespace std;
 
 string board[5][7] = {{"A", "O", "O", "O", "O", "O", "O"}, {"B", "O", "O", "O", "O", "O", "O"}, {"C", "O", "O", "O", "O", "O", "O"}, {"D", "O", "O", "O", "O", "O", "O"}, {" ", "1", "2", "3", "4", "5", "6"}};
 
 
 void show_board() {
+    cout << endl;
     for (int a = 0; a < 5; a++) {
         for (int b = 0; b < 7; b++) {
             cout << board[a][b] << " ";
         }
         cout << endl;
     }
+    cout << endl;
 }
 
 string get_coordinate_x() {
     string coordinate;
     cout << "Input X Coordinate to Fire On: ";
     cin >> coordinate;
+
+    while (coordinate != "1" && coordinate != "2" && coordinate != "3" && coordinate != "4" && coordinate != "5" && coordinate != "6"){
+        cout << "Please select 1, 2, 3, 4, 5, or 6: ";
+        cin >> coordinate;
+    }
 
     return coordinate;
 }
@@ -53,6 +63,9 @@ void fire() {
 
             for (int b = 0; b < 7; b++) {
                 if (coordinate_x == board[4][b]){
+                    cout << endl;
+                    cout << "HIT";
+                    cout << endl;
                     board[a][b] = "X";
                 }
             }
@@ -67,6 +80,7 @@ int main() {
     show_board();
 
     fire();
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     show_board();
 
