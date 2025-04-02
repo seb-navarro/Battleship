@@ -6,6 +6,21 @@ using namespace std;
 
 string board[5][7] = {{"A", "O", "O", "O", "O", "O", "O"}, {"B", "O", "O", "O", "O", "O", "O"}, {"C", "O", "O", "O", "O", "O", "O"}, {"D", "O", "O", "O", "O", "O", "O"}, {" ", "1", "2", "3", "4", "5", "6"}};
 
+void startmenu(){
+    cout << endl;
+    cout << "******        **       ********    ********    **          ********     ******     **    **    **    ******    \n";
+    cout << "**    **     ** **        **          **       **          **          **          **    **    **    **    **  \n";
+    cout << "**    **    **   **       **          **       **          **          **          **    **    **    **    **  \n";
+    cout << "******      *******       **          **       **          ********     ******     ********    **    ******    \n";
+    cout << "**    **    **   **       **          **       **          **                **    **    **    **    **        \n";
+    cout << "**    **    **   **       **          **       **          **                **    **    **    **    **        \n";
+    cout << "******      **   **       **          **       ********    ********     ******     **    **    **    **        \n";
+    cout << endl;
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    cout << "Press Enter to Start";
+    cin.ignore();
+    cin.get();
+}
 
 void show_board() {
     cout << endl;
@@ -76,6 +91,8 @@ void fire() {
 
 
 int main() {
+
+    startmenu();
 
     show_board();
 
