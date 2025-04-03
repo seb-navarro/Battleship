@@ -5,7 +5,6 @@
 using namespace std;
 
 
-
 class Board {
     public:
 
@@ -27,7 +26,8 @@ class Board {
             }
             cout << endl;
         }
-    };
+};
+
 
 Board PlayerBoard;
 Board EnemyBoard;
@@ -51,7 +51,7 @@ void startmenu(){
     cout << endl;
     cout << "INSTRUCTIONS: \n";
     cout <<"1. Position your ships on the grid (ONE 4 space size, ONE 3 space size, and TWO 2 space size). \n";
-    cout << "2. Attempt to sink the enemy ships by specifying firing coordinates. \n";
+    cout << "2. Take turns attempting to sink the enemy ships by specifying firing coordinates. \n";
     cout << "3. A miss will be indicated by a 'O' and a hit will be indicated by an 'X'. \n";
     cout << "4. The enemy will try to sink your ships. \n";
     cout << "5. First to sink all the opposing ships wins! \n";
@@ -127,12 +127,25 @@ int main() {
 
     startmenu();
 
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    cout << endl;
+    cout << "ENEMY BOARD \n";
     EnemyBoard.show_board();
+
+    cout << endl;
+    cout << "PLAYER BOARD \n";
+    PlayerBoard.show_board();
 
     fire();
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
+    cout << endl;
+    cout << "ENEMY BOARD \n";
     EnemyBoard.show_board();
+
+    cout << endl;
+    cout << "PLAYER BOARD \n";
+    PlayerBoard.show_board();
 
     return 0;
 }
