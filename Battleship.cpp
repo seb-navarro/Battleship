@@ -4,7 +4,28 @@
 
 using namespace std;
 
-string board[5][7] = {{"A", "O", "O", "O", "O", "O", "O"}, {"B", "O", "O", "O", "O", "O", "O"}, {"C", "O", "O", "O", "O", "O", "O"}, {"D", "O", "O", "O", "O", "O", "O"}, {" ", "1", "2", "3", "4", "5", "6"}};
+
+
+class Board {
+    public:
+
+        string grid[5][7] = {{"A", "O", "O", "O", "O", "O", "O"}, {"B", "O", "O", "O", "O", "O", "O"}, {"C", "O", "O", "O", "O", "O", "O"}, {"D", "O", "O", "O", "O", "O", "O"}, {" ", "1", "2", "3", "4", "5", "6"}};
+
+        void show_board() {
+            cout << endl;
+            for (int a = 0; a < 5; a++) {
+                for (int b = 0; b < 7; b++) {
+                    cout << grid[a][b] << " ";
+                }
+                cout << endl;
+            }
+            cout << endl;
+        }
+    };
+
+Board PlayerBoard;
+Board EnemyBoard;
+
 
 void startmenu(){
     cout << endl;
@@ -35,16 +56,6 @@ void startmenu(){
     cin.get();
 }
 
-void show_board() {
-    cout << endl;
-    for (int a = 0; a < 5; a++) {
-        for (int b = 0; b < 7; b++) {
-            cout << board[a][b] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
 
 string get_coordinate_x() {
     string coordinate;
@@ -58,6 +69,7 @@ string get_coordinate_x() {
 
     return coordinate;
 }
+
 
 string get_coordinate_y() {
     string coordinate;
@@ -82,19 +94,20 @@ string get_coordinate_y() {
     return coordinate;
 }
 
+
 void fire() {
     string coordinate_x = get_coordinate_x();
     string coordinate_y = get_coordinate_y();
 
     for (int a = 0; a < 5; a++) {
-        if (coordinate_y == board[a][0]){
+        if (coordinate_y == EnemyBoard.grid[a][0]){
 
             for (int b = 0; b < 7; b++) {
-                if (coordinate_x == board[4][b]){
+                if (coordinate_x == EnemyBoard.grid[4][b]){
                     cout << endl;
                     cout << "HIT";
                     cout << endl;
-                    board[a][b] = "X";
+                    EnemyBoard.grid[a][b] = "X";
                 }
             }
         }
@@ -103,16 +116,18 @@ void fire() {
 }
 
 
+
 int main() {
+
 
     startmenu();
 
-    show_board();
+    EnemyBoard.show_board();
 
     fire();
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    show_board();
+    EnemyBoard.show_board();
 
     return 0;
 }
