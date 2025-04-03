@@ -9,7 +9,13 @@ using namespace std;
 class Board {
     public:
 
-        string grid[5][7] = {{"A", "O", "O", "O", "O", "O", "O"}, {"B", "O", "O", "O", "O", "O", "O"}, {"C", "O", "O", "O", "O", "O", "O"}, {"D", "O", "O", "O", "O", "O", "O"}, {" ", "1", "2", "3", "4", "5", "6"}};
+        string grid[5][7] = {
+            {"A", "O", "O", "O", "O", "O", "O"}, 
+            {"B", "O", "O", "O", "O", "O", "O"}, 
+            {"C", "O", "O", "O", "O", "O", "O"}, 
+            {"D", "O", "O", "O", "O", "O", "O"}, 
+            {" ", "1", "2", "3", "4", "5", "6"}
+        };
 
         void show_board() {
             cout << endl;
@@ -118,7 +124,6 @@ void fire() {
 
 
 int main() {
-
 
     startmenu();
 
