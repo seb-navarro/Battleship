@@ -3,6 +3,8 @@
 #include <thread>
 
 using namespace std;
+using namespace std::chrono;
+using namespace std::this_thread;
 
 
 class Board {
@@ -43,7 +45,7 @@ void startmenu(){
     cout << "**    **    **   **       **          **       **          **                **    **    **    **    **        \n";
     cout << "******      **   **       **          **       ********    ********     ******     **    **    **    **        \n";
     cout << endl;
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    sleep_for(seconds(2));
 
     cout << "Press ENTER to Start";
     cin.get();
@@ -56,7 +58,7 @@ void startmenu(){
     cout << "4. The enemy will try to sink your ships. \n";
     cout << "5. First to sink all the opposing ships wins! \n";
     cout << endl;
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    sleep_for(seconds(2));
 
     cout << "Press ENTER to Acknowledge";
     cin.get();
@@ -114,10 +116,40 @@ void fire() {
                     cout << "HIT";
                     cout << endl;
                     EnemyBoard.grid[a][b] = "X";
+                    break;
                 }
             }
         }
-       
+    }
+}
+
+
+void enemy_fire() {
+   string x_coordinates[6] = {"1", "2", "3", "4", "5", "6"};
+   string y_coordinates[4] = {"A", "B", "C", "D"};
+
+    srand(time(NULL));
+
+    int x_index = (rand() % 6);
+    int y_index = (rand() % 4);
+
+    string x_pick = x_coordinates[x_index];
+    string y_pick = y_coordinates[y_index];
+
+    for (int a = 0; a < 5; a++) {
+        if (y_pick == PlayerBoard.grid[a][0]){
+
+            for (int b = 0; b < 7; b++) {
+                if (x_pick == PlayerBoard.grid[4][b]){
+                    cout << endl;
+                    cout << "HIT";
+                    cout << endl;
+                    PlayerBoard.grid[a][b] = "X";
+                    break;
+                }
+            }
+            break;
+        }
     }
 }
 
@@ -127,7 +159,7 @@ int main() {
 
     startmenu();
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    sleep_for(seconds(1));
     cout << endl;
     cout << "ENEMY BOARD \n";
     EnemyBoard.show_board();
@@ -137,7 +169,9 @@ int main() {
     PlayerBoard.show_board();
 
     fire();
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    sleep_for(seconds(1));
+    enemy_fire();
+    sleep_for(seconds(1));
 
     cout << endl;
     cout << "ENEMY BOARD \n";
