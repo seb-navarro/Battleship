@@ -6,6 +6,7 @@ using namespace std;
 using namespace std::chrono;
 using namespace std::this_thread;
 
+// Potential Boats = ⛵, 🛥, ⛴, 🚢, 🛥️, 🚤
 
 class Board {
     public:
@@ -52,7 +53,7 @@ void startmenu(){
 
     cout << endl;
     cout << "INSTRUCTIONS: \n";
-    cout <<"1. Position your ships on the grid (ONE 4 space size, ONE 3 space size, and TWO 2 space size). \n";
+    cout << "1. Position your ships on the grid (10 ships total ⛴). \n";
     cout << "2. Take turns attempting to sink the enemy ships by specifying firing coordinates. \n";
     cout << "3. A miss will be indicated by a 'O' and a hit will be indicated by an 'X'. \n";
     cout << "4. The enemy will try to sink your ships. \n";
