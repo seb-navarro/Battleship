@@ -29,6 +29,27 @@ class Board {
             }
             cout << endl;
         }
+
+        void mark_grid(string x, string y, bool is_shot) {
+            for (int a = 0; a < 5; a++) {
+                if (y == grid[a][0]){
+                    for (int b = 0; b < 7; b++) {
+                        if (x == grid[4][b]){
+                            if (is_shot == true){
+                                cout << endl;
+                                cout << "HIT";
+                                cout << endl;
+                                grid[a][b] = "X";
+                            } else {
+                                grid[a][b] = "⛴";
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
 };
 
 
@@ -82,47 +103,6 @@ void show_enemy_board() {
 }
 
 
-void mark_grid(string x, string y, bool is_shot, bool is_enemy_grid) {
-    for (int a = 0; a < 5; a++) {
-        if (is_enemy_grid == false){
-            if (y == PlayerBoard.grid[a][0]){
-
-                for (int b = 0; b < 7; b++) {
-                    if (x == PlayerBoard.grid[4][b]){
-                        if (is_shot == true){
-                            cout << endl;
-                            cout << "HIT";
-                            cout << endl;
-                            PlayerBoard.grid[a][b] = "X";
-                        } else {
-                            PlayerBoard.grid[a][b] = "⛴";
-                        }
-                        break;
-                    }
-                }
-                break;
-            }
-        } else {
-            if (y == EnemyBoard.grid[a][0]){
-    
-                for (int b = 0; b < 7; b++) {
-                    if (x == EnemyBoard.grid[4][b]){
-                        if (is_shot == true) {
-                            cout << endl;
-                            cout << "HIT";
-                            cout << endl;
-                            EnemyBoard.grid[a][b] = "X";
-                        } else {
-                            EnemyBoard.grid[a][b] = "⛴";
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    } 
-}
-
 
 string get_coordinate_x() {
     string coordinate;
@@ -165,22 +145,19 @@ string get_coordinate_y() {
 void position_player_ships() {
     for (int a = 10; a > 0; a--) {
         show_player_board();
-        cout << "Position Ship ("; cout << a; cout << " Remaining)";
+        cout << "Position Ship ("; cout << a; cout << " Remaining) \n";
         string ship_x = get_coordinate_x();
         string ship_y = get_coordinate_y();
-        mark_grid(ship_x, ship_y, false, false);
+        PlayerBoard.mark_grid(ship_x, ship_y, false);
     }
 }
-
-
-
 
 
 void fire() {
     string coordinate_x = get_coordinate_x();
     string coordinate_y = get_coordinate_y();
 
-    mark_grid(coordinate_x, coordinate_y, true, true);
+    EnemyBoard.mark_grid(coordinate_x, coordinate_y, true);
 }
 
 
@@ -196,7 +173,7 @@ void enemy_fire() {
     string x_pick = x_coordinates[x_index];
     string y_pick = y_coordinates[y_index];
 
-    mark_grid(x_pick, y_pick, true, false);
+    PlayerBoard.mark_grid(x_pick, y_pick, true);
 }
 
 
