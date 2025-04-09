@@ -143,7 +143,7 @@ string get_coordinate_y() {
 
 
 void position_player_ships() {
-    for (int a = 10; a > 0; a--) {
+    for (int a = 5; a > 0; a--) {
         show_player_board();
         cout << "Position Ship ("; cout << a; cout << " Remaining) \n";
         string ship_x = get_coordinate_x();
