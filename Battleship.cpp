@@ -180,6 +180,7 @@ void position_player_ships() {
             }  
         }
     }
+    show_player_board();
 }
 
 
