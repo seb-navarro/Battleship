@@ -191,8 +191,6 @@ void position_enemy_ships() {
         bool success = false;
 
         while(success == false){
-            srand(time(NULL));
-
             int x_index = (rand() % 6);
             int y_index = (rand() % 4);
 
@@ -230,8 +228,6 @@ void enemy_fire() {
    bool success = false;
 
     while (success == false) {
-        srand(time(NULL));
-
         int x_index = (rand() % 6);
         int y_index = (rand() % 4);
 
@@ -245,6 +241,7 @@ void enemy_fire() {
 
 
 int main() {
+    srand(time(NULL));
 
     startmenu();
 
