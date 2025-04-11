@@ -6,7 +6,7 @@ using namespace std;
 using namespace std::chrono;
 using namespace std::this_thread;
 
-// Potential Boats = ⛵, 🛥, ⛴, 🚢, 🛥️, 🚤
+// Potential Boats = ⛵, 🛥, ⛴, 🚢, 🛥️, 🚤, #
 
 class Board {
     public:
@@ -15,7 +15,7 @@ class Board {
             {"A", "O", "O", "O", "O", "O", "O"}, 
             {"B", "O", "O", "O", "O", "O", "O"}, 
             {"C", "O", "O", "O", "O", "O", "O"}, 
-            {"D", "O", "O", "O", "O", "O", "O"}, 
+            {"D", "O", "O", "O", "O", "O", "#"}, 
             {" ", "1", "2", "3", "4", "5", "6"}
         };
 
@@ -30,18 +30,34 @@ class Board {
             cout << endl;
         }
 
-        void mark_grid(string x, string y, bool is_shot) {
+        bool mark_grid(string x, string y, bool is_shot) {
             for (int a = 0; a < 5; a++) {
                 if (y == grid[a][0]){
                     for (int b = 0; b < 7; b++) {
                         if (x == grid[4][b]){
-                            if (is_shot == true){
-                                cout << endl;
-                                cout << "HIT";
-                                cout << endl;
-                                grid[a][b] = "X";
+                            if (is_shot == true) {
+                                if (grid[a][b] == "#") {
+                                    cout << endl;
+                                    cout << "HIT";
+                                    cout << endl;
+                                    grid[a][b] = "X";
+                                    return true;
+                                } else if (grid[a][b] == "O") {
+                                    cout << endl;
+                                    cout << "MISS";
+                                    cout << endl;
+                                    grid[a][b] = " ";
+                                    return true;                                    
+                                } else {
+                                    return false;
+                                }
                             } else {
-                                grid[a][b] = "⛴";
+                                if (grid[a][b] == "#") {
+                                    return false;
+                                } else {
+                                    grid[a][b] = "#";
+                                    return true;
+                                }
                             }
                             break;
                         }
@@ -49,6 +65,7 @@ class Board {
                     break;
                 }
             }
+            return false;
         }
 };
 
@@ -74,9 +91,9 @@ void startmenu(){
 
     cout << endl;
     cout << "INSTRUCTIONS: \n";
-    cout << "1. Position your ships on the grid (10 ships total ⛴ ). \n";
+    cout << "1. Position your ships on the grid (10 ships total - Ships = # ). \n";
     cout << "2. Take turns attempting to sink the enemy ships by specifying firing coordinates. \n";
-    cout << "3. A miss will be indicated by a 'O' and a hit will be indicated by an 'X'. \n";
+    cout << "3. A hit will be indicated by an 'X', and a miss will be indicated by a ' '. \n";
     cout << "4. The enemy will try to sink your ships. \n";
     cout << "5. First to sink all the opposing ships wins! \n";
     cout << endl;
@@ -145,19 +162,42 @@ string get_coordinate_y() {
 void position_player_ships() {
     for (int a = 5; a > 0; a--) {
         show_player_board();
-        cout << "Position Ship ("; cout << a; cout << " Remaining) \n";
-        string ship_x = get_coordinate_x();
-        string ship_y = get_coordinate_y();
-        PlayerBoard.mark_grid(ship_x, ship_y, false);
+
+        bool success = false;
+
+        while(success == false){
+            cout << "Position Ship ("; cout << a; cout << " Remaining) \n";
+            string ship_x = get_coordinate_x();
+            string ship_y = get_coordinate_y();
+
+            success = PlayerBoard.mark_grid(ship_x, ship_y, false);
+
+            if (success == false) {
+                cout << endl;
+                cout << "INVALID SHIP PLACEMENT \n";
+                cout << "SHIP ALREADY IN SPECIFIED POSITION \n";
+                cout << endl;
+            }  
+        }
     }
 }
 
 
 void fire() {
-    string coordinate_x = get_coordinate_x();
-    string coordinate_y = get_coordinate_y();
+    bool success = false;
 
-    EnemyBoard.mark_grid(coordinate_x, coordinate_y, true);
+    while (success == false) {
+        string coordinate_x = get_coordinate_x();
+        string coordinate_y = get_coordinate_y();
+        success = EnemyBoard.mark_grid(coordinate_x, coordinate_y, true);
+
+        if (success == false) {
+            cout << endl;
+            cout << "INVALID SHOT PLACEMENT \n";
+            cout << "PLEASE SELECT A COORDINATE THAT HAS NOT PREVIOUSLY BEEN FIRED ON \n";
+            cout << endl;
+        }
+    }
 }
 
 
@@ -165,15 +205,19 @@ void enemy_fire() {
    string x_coordinates[6] = {"1", "2", "3", "4", "5", "6"};
    string y_coordinates[4] = {"A", "B", "C", "D"};
 
-    srand(time(NULL));
+   bool success = false;
 
-    int x_index = (rand() % 6);
-    int y_index = (rand() % 4);
+    while (success == false) {
+        srand(time(NULL));
 
-    string x_pick = x_coordinates[x_index];
-    string y_pick = y_coordinates[y_index];
+        int x_index = (rand() % 6);
+        int y_index = (rand() % 4);
 
-    PlayerBoard.mark_grid(x_pick, y_pick, true);
+        string x_pick = x_coordinates[x_index];
+        string y_pick = y_coordinates[y_index];
+
+        success = PlayerBoard.mark_grid(x_pick, y_pick, true);
+    }
 }
 
 
@@ -187,6 +231,36 @@ int main() {
     sleep_for(seconds(1));
     show_enemy_board();
     show_player_board();
+
+    fire();
+    sleep_for(seconds(1));
+    enemy_fire();
+    sleep_for(seconds(1));
+
+    show_enemy_board();
+
+    show_player_board();
+
+
+    fire();
+    sleep_for(seconds(1));
+    enemy_fire();
+    sleep_for(seconds(1));
+
+    show_enemy_board();
+
+    show_player_board();
+
+
+    fire();
+    sleep_for(seconds(1));
+    enemy_fire();
+    sleep_for(seconds(1));
+
+    show_enemy_board();
+
+    show_player_board();
+
 
     fire();
     sleep_for(seconds(1));
