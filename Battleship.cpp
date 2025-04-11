@@ -183,6 +183,28 @@ void position_player_ships() {
 }
 
 
+void position_enemy_ships() {
+    string x_coordinates[6] = {"1", "2", "3", "4", "5", "6"};
+    string y_coordinates[4] = {"A", "B", "C", "D"};
+
+    for (int a = 5; a > 0; a--) {
+        bool success = false;
+
+        while(success == false){
+            srand(time(NULL));
+
+            int x_index = (rand() % 6);
+            int y_index = (rand() % 4);
+
+            string ship_x = x_coordinates[x_index];
+            string ship_y = y_coordinates[y_index];
+
+            success = EnemyBoard.mark_grid(ship_x, ship_y, false);
+        }
+    }
+}
+
+
 void fire() {
     bool success = false;
 
@@ -227,6 +249,7 @@ int main() {
     startmenu();
 
     position_player_ships();
+    position_enemy_ships();
 
     sleep_for(seconds(1));
     show_enemy_board();
