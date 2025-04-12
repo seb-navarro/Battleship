@@ -19,11 +19,30 @@ class Board {
             {" ", "1", "2", "3", "4", "5", "6"}
         };
 
+        string hidden_grid[5][7] = {
+            {"A", "O", "O", "O", "O", "O", "O"}, 
+            {"B", "O", "O", "O", "O", "O", "O"}, 
+            {"C", "O", "O", "O", "O", "O", "O"}, 
+            {"D", "O", "O", "O", "O", "O", "O"}, 
+            {" ", "1", "2", "3", "4", "5", "6"}
+        };
+
         void show_board() {
             cout << endl;
             for (int a = 0; a < 5; a++) {
                 for (int b = 0; b < 7; b++) {
                     cout << grid[a][b] << " ";
+                }
+                cout << endl;
+            }
+            cout << endl;
+        }
+
+        void show_hidden_board() {
+            cout << endl;
+            for (int a = 0; a < 5; a++) {
+                for (int b = 0; b < 7; b++) {
+                    cout << hidden_grid[a][b] << " ";
                 }
                 cout << endl;
             }
@@ -41,12 +60,14 @@ class Board {
                                     cout << "HIT";
                                     cout << endl;
                                     grid[a][b] = "X";
+                                    hidden_grid[a][b] = "X";
                                     return true;
                                 } else if (grid[a][b] == "O") {
                                     cout << endl;
                                     cout << "MISS";
                                     cout << endl;
                                     grid[a][b] = " ";
+                                    hidden_grid[a][b] = " ";
                                     return true;                                    
                                 } else {
                                     return false;
@@ -115,7 +136,7 @@ void show_player_board() {
 void show_enemy_board() {
     cout << endl;
     cout << "ENEMY BOARD \n";
-    EnemyBoard.show_board();
+    EnemyBoard.show_hidden_board();
 }
 
 
