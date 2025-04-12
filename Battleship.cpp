@@ -240,25 +240,7 @@ void enemy_fire() {
 }
 
 
-
-int main() {
-    srand(time(NULL));
-
-    startmenu();
-
-    position_player_ships();
-    position_enemy_ships();
-    cout << "Ships (#) In Position \n";
-    cout << "Press ENTER to Acknowledge";
-    cin.get();
-    cin.get();
-    cout << endl;
-    cout << endl;
-
-    sleep_for(seconds(1));
-    show_enemy_board();
-    show_player_board();
-
+void round() {
     fire();
     sleep_for(seconds(2));
     cout << endl;
@@ -274,36 +256,32 @@ int main() {
     cout << endl;
     show_enemy_board();
     show_player_board();
+}
 
 
-    fire();
-    sleep_for(seconds(1));
-    enemy_fire();
-    sleep_for(seconds(1));
+int main() {
+    srand(time(NULL));
 
+    startmenu();
+
+    position_player_ships();
+    position_enemy_ships();
+    cout << "Ships (#) In Position \n";
+    cout << "Press ENTER to Acknowledge";
+    cin.get();
+    cin.get();
+    cout << endl;
+
+    sleep_for(seconds(2));
+    cout << endl;
     show_enemy_board();
-
+    sleep_for(seconds(2));
     show_player_board();
+    sleep_for(seconds(2));
 
-
-    fire();
-    sleep_for(seconds(1));
-    enemy_fire();
-    sleep_for(seconds(1));
-
-    show_enemy_board();
-
-    show_player_board();
-
-
-    fire();
-    sleep_for(seconds(1));
-    enemy_fire();
-    sleep_for(seconds(1));
-
-    show_enemy_board();
-
-    show_player_board();
+    round();
+    round();
+    round();
 
     return 0;
 }
