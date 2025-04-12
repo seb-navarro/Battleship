@@ -6,14 +6,24 @@ using namespace std;
 using namespace std::chrono;
 using namespace std::this_thread;
 
-// Potential Boats = ⛵, 🛥, ⛴, 🚢, 🛥️, 🚤, #
+
+const string default_grid[5][5] = {
+    {"A", "O", "O", "O", "O"}, 
+    {"B", "O", "O", "O", "O"}, 
+    {"C", "O", "O", "O", "O"}, 
+    {"D", "O", "O", "O", "O"}, 
+    {" ", "1", "2", "3", "4"}
+};
+
+const int default_ships = 4;
+
 
 class Board {
     public:
 
         int ships_left = 4;
 
-        string grid[5][7] = {
+        string grid[5][5] = {
             {"A", "O", "O", "O", "O"}, 
             {"B", "O", "O", "O", "O"}, 
             {"C", "O", "O", "O", "O"}, 
@@ -21,13 +31,14 @@ class Board {
             {" ", "1", "2", "3", "4"}
         };
 
-        string hidden_grid[5][7] = {
+        string hidden_grid[5][5] = {
             {"A", "O", "O", "O", "O"}, 
             {"B", "O", "O", "O", "O"}, 
             {"C", "O", "O", "O", "O"}, 
             {"D", "O", "O", "O", "O"}, 
             {" ", "1", "2", "3", "4"}
         };
+
 
         void show_board() {
             cout << endl;
@@ -40,6 +51,7 @@ class Board {
             cout << endl;
         }
 
+
         void show_hidden_board() {
             cout << endl;
             for (int a = 0; a < 5; a++) {
@@ -50,6 +62,7 @@ class Board {
             }
             cout << endl;
         }
+
 
         bool mark_grid(string x, string y, bool is_shot) {
             for (int a = 0; a < 5; a++) {
@@ -120,12 +133,13 @@ void startmenu(){
     cout << "3. A hit will be indicated by an 'X', and a miss will be indicated by a ' '. \n";
     cout << "4. The enemy will try to sink your ships. \n";
     cout << "5. First to sink all the opposing ships wins! \n";
+
     cout << endl;
     sleep_for(seconds(2));
-
-    cout << "Press ENTER to Acknowledge";
+    cout << "Press ENTER to Begin Playing BATTLESHIP";
     cin.get();
     cout << endl;
+    sleep_for(seconds(2));
 }
 
 
@@ -156,7 +170,7 @@ string get_coordinate_x() {
     cin >> coordinate;
 
     while (coordinate != "1" && coordinate != "2" && coordinate != "3" && coordinate != "4"){
-        cout << "Please select 1, 2, 3, or 4: ";
+        cout << "*ERROR* - Please select 1, 2, 3, or 4: ";
         cin >> coordinate;
     }
 
@@ -170,7 +184,7 @@ string get_coordinate_y() {
     cin >> coordinate;
 
     while (coordinate != "a" && coordinate != "A" && coordinate != "b" && coordinate != "B" && coordinate != "c" && coordinate != "C" && coordinate != "d" && coordinate != "D"){
-        cout << "Please select A, B, C, or D: ";
+        cout << "*ERROR* - Please select A, B, C, or D: ";
         cin >> coordinate;
     }
 
@@ -203,7 +217,7 @@ void position_player_ships() {
 
             if (success == false) {
                 cout << endl;
-                cout << "INVALID SHIP PLACEMENT \n";
+                cout << "*ERROR* - INVALID SHIP PLACEMENT \n";
                 cout << "SHIP ALREADY IN SPECIFIED POSITION \n";
                 cout << endl;
             }  
@@ -245,7 +259,7 @@ void fire() {
 
         if (success == false) {
             cout << endl;
-            cout << "INVALID SHOT PLACEMENT \n";
+            cout << "*ERROR* - INVALID SHOT PLACEMENT \n";
             cout << "PLEASE SELECT A COORDINATE THAT HAS NOT PREVIOUSLY BEEN FIRED ON \n";
             cout << endl;
         }
@@ -329,10 +343,35 @@ bool round() {
 }
 
 
-void play_game() {
-    srand(time(NULL));
-
+void play_game(bool replay) {
     string choice;
+
+    if (replay == true) {
+        for (int a = 0; a < 5; ++a)
+            for (int b = 0; b < 5; ++b)
+                PlayerBoard.grid[a][b] = default_grid[a][b];
+
+        for (int a = 0; a < 5; ++a)
+            for (int b = 0; b < 5; ++b)
+                PlayerBoard.hidden_grid[a][b] = default_grid[a][b];
+
+        for (int a = 0; a < 5; ++a)
+            for (int b = 0; b < 5; ++b)
+                EnemyBoard.grid[a][b] = default_grid[a][b];
+
+        for (int a = 0; a < 5; ++a)
+            for (int b = 0; b < 5; ++b)
+                EnemyBoard.hidden_grid[a][b] = default_grid[a][b];
+
+        PlayerBoard.ships_left = default_ships;
+        EnemyBoard.ships_left = default_ships;
+
+        cout << "Welcome Back To BATTLESHIP \n";
+        cout << "Press ENTER To Begin";
+        cin.get();
+        cin.get();
+        cout << endl;
+    }
 
     position_player_ships();
     position_enemy_ships();
@@ -361,29 +400,34 @@ void play_game() {
     cout << endl;
 
     while (choice != "Y" && choice != "y" && choice != "N" && choice != "n") {
-        cout << "Please select YES with 'Y' or NO with 'N': ";
+        cout << "*ERROR* - Please select YES with 'Y' or NO with 'N': ";
         cin >> choice;
         cout << endl;
     }
 
     if (choice == "Y" || choice == "y") {
-        play_game();
+        play_game(true);
     } else if (choice =="N" || choice == "n") {
         sleep_for(seconds(2));
         cout << "Thank You For Playing \n";
         cout << "Made by Sebastian Navarro \n";
+        sleep_for(seconds(2));
         cout  << "Press ENTER to Exit";
         cin.get();
         cin.get();
         cout << endl;
+        sleep_for(seconds(1));
     }
 }
 
 
+
 int main() {
+    srand(time(NULL));
+
     startmenu();
 
-    play_game();
+    play_game(false);
 
     return 0;
 }
