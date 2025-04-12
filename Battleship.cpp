@@ -11,28 +11,28 @@ using namespace std::this_thread;
 class Board {
     public:
 
-        int ships_left = 5;
+        int ships_left = 4;
 
         string grid[5][7] = {
-            {"A", "O", "O", "O", "O", "O", "O"}, 
-            {"B", "O", "O", "O", "O", "O", "O"}, 
-            {"C", "O", "O", "O", "O", "O", "O"}, 
-            {"D", "O", "O", "O", "O", "O", "O"}, 
-            {" ", "1", "2", "3", "4", "5", "6"}
+            {"A", "O", "O", "O", "O"}, 
+            {"B", "O", "O", "O", "O"}, 
+            {"C", "O", "O", "O", "O"}, 
+            {"D", "O", "O", "O", "O"}, 
+            {" ", "1", "2", "3", "4"}
         };
 
         string hidden_grid[5][7] = {
-            {"A", "O", "O", "O", "O", "O", "O"}, 
-            {"B", "O", "O", "O", "O", "O", "O"}, 
-            {"C", "O", "O", "O", "O", "O", "O"}, 
-            {"D", "O", "O", "O", "O", "O", "O"}, 
-            {" ", "1", "2", "3", "4", "5", "6"}
+            {"A", "O", "O", "O", "O"}, 
+            {"B", "O", "O", "O", "O"}, 
+            {"C", "O", "O", "O", "O"}, 
+            {"D", "O", "O", "O", "O"}, 
+            {" ", "1", "2", "3", "4"}
         };
 
         void show_board() {
             cout << endl;
             for (int a = 0; a < 5; a++) {
-                for (int b = 0; b < 7; b++) {
+                for (int b = 0; b < 5; b++) {
                     cout << grid[a][b] << " ";
                 }
                 cout << endl;
@@ -43,7 +43,7 @@ class Board {
         void show_hidden_board() {
             cout << endl;
             for (int a = 0; a < 5; a++) {
-                for (int b = 0; b < 7; b++) {
+                for (int b = 0; b < 5; b++) {
                     cout << hidden_grid[a][b] << " ";
                 }
                 cout << endl;
@@ -54,7 +54,7 @@ class Board {
         bool mark_grid(string x, string y, bool is_shot) {
             for (int a = 0; a < 5; a++) {
                 if (y == grid[a][0]){
-                    for (int b = 0; b < 7; b++) {
+                    for (int b = 0; b < 5; b++) {
                         if (x == grid[4][b]){
                             if (is_shot == true) {
                                 if (grid[a][b] == "#") {
@@ -115,7 +115,7 @@ void startmenu(){
 
     cout << endl;
     cout << "INSTRUCTIONS: \n";
-    cout << "1. Position your ships on the grid (10 ships total - Ships = # ). \n";
+    cout << "1. Position your ships on the grid (4 ships total - Ships = # ). \n";
     cout << "2. Take turns attempting to sink the enemy ships by specifying firing coordinates. \n";
     cout << "3. A hit will be indicated by an 'X', and a miss will be indicated by a ' '. \n";
     cout << "4. The enemy will try to sink your ships. \n";
@@ -155,8 +155,8 @@ string get_coordinate_x() {
     cout << "Input X Coordinate: ";
     cin >> coordinate;
 
-    while (coordinate != "1" && coordinate != "2" && coordinate != "3" && coordinate != "4" && coordinate != "5" && coordinate != "6"){
-        cout << "Please select 1, 2, 3, 4, 5, or 6: ";
+    while (coordinate != "1" && coordinate != "2" && coordinate != "3" && coordinate != "4"){
+        cout << "Please select 1, 2, 3, or 4: ";
         cin >> coordinate;
     }
 
@@ -189,7 +189,7 @@ string get_coordinate_y() {
 
 
 void position_player_ships() {
-    for (int a = 5; a > 0; a--) {
+    for (int a = 4; a > 0; a--) {
         show_player_board();
 
         bool success = false;
@@ -214,14 +214,14 @@ void position_player_ships() {
 
 
 void position_enemy_ships() {
-    string x_coordinates[6] = {"1", "2", "3", "4", "5", "6"};
+    string x_coordinates[6] = {"1", "2", "3", "4"};
     string y_coordinates[4] = {"A", "B", "C", "D"};
 
-    for (int a = 5; a > 0; a--) {
+    for (int a = 4; a > 0; a--) {
         bool success = false;
 
         while(success == false){
-            int x_index = (rand() % 6);
+            int x_index = (rand() % 4);
             int y_index = (rand() % 4);
 
             string ship_x = x_coordinates[x_index];
@@ -254,13 +254,13 @@ void fire() {
 
 
 void enemy_fire() {
-   string x_coordinates[6] = {"1", "2", "3", "4", "5", "6"};
+   string x_coordinates[6] = {"1", "2", "3", "4"};
    string y_coordinates[4] = {"A", "B", "C", "D"};
 
    bool success = false;
 
     while (success == false) {
-        int x_index = (rand() % 6);
+        int x_index = (rand() % 4);
         int y_index = (rand() % 4);
 
         string x_pick = x_coordinates[x_index];
@@ -285,7 +285,7 @@ void game_win() {
     sleep_for(seconds(2));
     cout << "You have destroyed all the enemy ships! \n";
     sleep_for(seconds(2));
-    cout << "*****YOU WIN*****";
+    cout << "*****YOU WIN***** \n";
 }
 
 
@@ -293,7 +293,7 @@ void game_draw() {
     sleep_for(seconds(2));
     cout << "The last shots have destroyed both the enemy and your last ship simultaneously! \n";
     sleep_for(seconds(2));
-    cout << "THE GAME IS A DRAW";
+    cout << "THE GAME IS A DRAW \n";
 }
 
 
@@ -373,6 +373,7 @@ void play_game() {
         cout << "Thank You For Playing \n";
         cout << "Made by Sebastian Navarro \n";
         cout  << "Press ENTER to Exit";
+        cin.get();
         cin.get();
         cout << endl;
     }
