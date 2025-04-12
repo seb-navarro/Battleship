@@ -101,6 +101,7 @@ void startmenu(){
 
     cout << "Press ENTER to Acknowledge";
     cin.get();
+    cout << endl;
 }
 
 
@@ -108,7 +109,6 @@ void show_player_board() {
     cout << endl;
     cout << "PLAYER BOARD \n";
     PlayerBoard.show_board();
-    cout << endl;
 }
 
 
@@ -116,9 +116,7 @@ void show_enemy_board() {
     cout << endl;
     cout << "ENEMY BOARD \n";
     EnemyBoard.show_board();
-    cout << endl;
 }
-
 
 
 string get_coordinate_x() {
@@ -207,6 +205,8 @@ void position_enemy_ships() {
 void fire() {
     bool success = false;
 
+    cout << "Fire on Enemy Grid \n";
+
     while (success == false) {
         string coordinate_x = get_coordinate_x();
         string coordinate_y = get_coordinate_y();
@@ -248,18 +248,31 @@ int main() {
 
     position_player_ships();
     position_enemy_ships();
+    cout << "Ships (#) In Position \n";
+    cout << "Press ENTER to Acknowledge";
+    cin.get();
+    cin.get();
+    cout << endl;
+    cout << endl;
 
     sleep_for(seconds(1));
     show_enemy_board();
     show_player_board();
 
     fire();
-    sleep_for(seconds(1));
+    sleep_for(seconds(2));
+    cout << endl;
+    cout << "Enemy's Turn \n";
+    sleep_for(seconds(2));
     enemy_fire();
-    sleep_for(seconds(1));
-
+    sleep_for(seconds(2));
+    cout << endl;
+    cout << "Results \n";
+    cout << "   | \n";
+    cout << "   V \n";
+    sleep_for(seconds(2));
+    cout << endl;
     show_enemy_board();
-
     show_player_board();
 
 
