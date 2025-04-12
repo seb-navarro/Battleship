@@ -11,6 +11,8 @@ using namespace std::this_thread;
 class Board {
     public:
 
+        int ships_left = 5;
+
         string grid[5][7] = {
             {"A", "O", "O", "O", "O", "O", "O"}, 
             {"B", "O", "O", "O", "O", "O", "O"}, 
@@ -61,6 +63,7 @@ class Board {
                                     cout << endl;
                                     grid[a][b] = "X";
                                     hidden_grid[a][b] = "X";
+                                    ships_left -= 1;
                                     return true;
                                 } else if (grid[a][b] == "O") {
                                     cout << endl;
@@ -137,6 +140,13 @@ void show_enemy_board() {
     cout << endl;
     cout << "ENEMY BOARD \n";
     EnemyBoard.show_hidden_board();
+}
+
+
+void show_enemy_ships() {
+    cout << endl;
+    cout << "ENEMY SHIPS STILL AFLOAT \n";
+    EnemyBoard.show_board();
 }
 
 
@@ -261,7 +271,33 @@ void enemy_fire() {
 }
 
 
-void round() {
+void game_over() {
+    sleep_for(seconds(2));
+    cout << "The enemy has destroyed all your ships! \n";
+    sleep_for(seconds(2));
+    show_enemy_ships();
+    sleep_for(seconds(2));
+    cout << "GAME OVER \n";
+}
+
+
+void game_win() {
+    sleep_for(seconds(2));
+    cout << "You have destroyed all the enemy ships! \n";
+    sleep_for(seconds(2));
+    cout << "*****YOU WIN*****";
+}
+
+
+void game_draw() {
+    sleep_for(seconds(2));
+    cout << "The last shots have destroyed both the enemy and your last ship simultaneously! \n";
+    sleep_for(seconds(2));
+    cout << "THE GAME IS A DRAW";
+}
+
+
+bool round() {
     fire();
     sleep_for(seconds(2));
     cout << endl;
@@ -277,13 +313,26 @@ void round() {
     cout << endl;
     show_enemy_board();
     show_player_board();
+
+    if (PlayerBoard.ships_left == 0 and EnemyBoard.ships_left == 0) {
+        game_draw();
+        return false;
+    } else if (PlayerBoard.ships_left == 0) {
+        game_over();
+        return false;
+    } else if (EnemyBoard.ships_left == 0) {
+        game_win();
+        return false;
+    } else {
+        return true;
+    }
 }
 
 
-int main() {
+void play_game() {
     srand(time(NULL));
 
-    startmenu();
+    string choice;
 
     position_player_ships();
     position_enemy_ships();
@@ -300,9 +349,40 @@ int main() {
     show_player_board();
     sleep_for(seconds(2));
 
-    round();
-    round();
-    round();
+    bool repeat = true;
+
+    while (repeat == true) {
+        repeat = round();
+    }
+
+    sleep_for(seconds(2));
+    cout << "Would You Like To Play Again? (Y/N): ";
+    cin >> choice;
+    cout << endl;
+
+    while (choice != "Y" && choice != "y" && choice != "N" && choice != "n") {
+        cout << "Please select YES with 'Y' or NO with 'N': ";
+        cin >> choice;
+        cout << endl;
+    }
+
+    if (choice == "Y" || choice == "y") {
+        play_game();
+    } else if (choice =="N" || choice == "n") {
+        sleep_for(seconds(2));
+        cout << "Thank You For Playing \n";
+        cout << "Made by Sebastian Navarro \n";
+        cout  << "Press ENTER to Exit";
+        cin.get();
+        cout << endl;
+    }
+}
+
+
+int main() {
+    startmenu();
+
+    play_game();
 
     return 0;
 }
