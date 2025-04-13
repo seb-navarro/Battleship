@@ -139,7 +139,6 @@ void startmenu(){
     cout << "Press ENTER to Begin Playing BATTLESHIP";
     cin.get();
     cout << endl;
-    sleep_for(seconds(2));
 }
 
 
@@ -289,6 +288,7 @@ void game_over() {
     sleep_for(seconds(2));
     cout << "The enemy has destroyed all your ships! \n";
     sleep_for(seconds(2));
+    cout << endl;
     show_enemy_ships();
     sleep_for(seconds(2));
     cout << "GAME OVER \n";
@@ -380,9 +380,8 @@ void play_game(bool replay) {
     cin.get();
     cin.get();
     cout << endl;
-
-    sleep_for(seconds(2));
     cout << endl;
+
     show_enemy_board();
     sleep_for(seconds(2));
     show_player_board();
