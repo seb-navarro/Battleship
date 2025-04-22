@@ -228,7 +228,7 @@ void position_player_ships() {
 
 
 void position_enemy_ships() {
-    string x_coordinates[6] = {"1", "2", "3", "4"};
+    string x_coordinates[4] = {"1", "2", "3", "4"};
     string y_coordinates[4] = {"A", "B", "C", "D"};
 
     for (int a = 4; a > 0; a--) {
@@ -268,7 +268,7 @@ void fire() {
 
 
 void enemy_fire() {
-   string x_coordinates[6] = {"1", "2", "3", "4"};
+   string x_coordinates[4] = {"1", "2", "3", "4"};
    string y_coordinates[4] = {"A", "B", "C", "D"};
 
    bool success = false;
