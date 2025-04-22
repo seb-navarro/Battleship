@@ -329,7 +329,7 @@ bool round() {
     show_enemy_board();
     show_player_board();
 
-    if (PlayerBoard.ships_left == 0 and EnemyBoard.ships_left == 0) {
+    if (PlayerBoard.ships_left == 0 && EnemyBoard.ships_left == 0) {
         game_draw();
         return false;
     } else if (PlayerBoard.ships_left == 0) {
